@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using FluentValidation.AspNetCore;
+using HtmlTags;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -12,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using YourForum.Web.Data;
 using YourForum.Web.Infrastructure;
+using YourForum.Web.Infrastructure.Tags;
 
 namespace YourForum.Web
 {
@@ -33,6 +35,8 @@ namespace YourForum.Web
             services.AddAutoMapper();
 
             services.AddMediatR();
+
+            services.AddHtmlTags(new TagConventions());
 
             services
                 .AddMvc(opt =>
