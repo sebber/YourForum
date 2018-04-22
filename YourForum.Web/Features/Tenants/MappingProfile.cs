@@ -12,6 +12,8 @@ namespace YourForum.Web.Features.Tenants
         public MappingProfile()
         {
             CreateMap<Tenant, Index.Result.Tenant>();
+            CreateMap<Create.Command, Tenant>(MemberList.Source).ForSourceMember(c => c.Id, opt => opt.Ignore());
+            CreateMap<Tenant, Edit.Command>().ReverseMap();
         }
     }
 }

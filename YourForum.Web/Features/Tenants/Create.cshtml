@@ -1,20 +1,27 @@
 ﻿@model YourForum.Web.Features.Tenants.Create.Command
 
-<form asp-action="create" method="post">
-    @Html.ValidationDiv()
+<div class="page-header">
+    <h1>Registrera ett nytt forumsystem</h1>
+</div>
 
-    @Html.FormBlock(m => m.Name)
 
-    <ul class="nav nav-pills nav-justified">
-        <li role="presentation">
-            <button class="btn btn-link" asp-action="index">
-                Avbryt
-            </button>
-        </li>
-        <li role="presentation">
-            <button type="submit" class="btn btn-success">
-                Spara
-            </button>
-        </li>
-    </ul>
-</form>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="create" method="post">
+            @Html.ValidationDiv()
+
+            @Html.FormBlock(m => m.Name)
+
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-success pull-right">
+                    Spara
+                </button>
+
+                <button asp-action="index" class="btn btn-link pull-left">
+                    Avbryt
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

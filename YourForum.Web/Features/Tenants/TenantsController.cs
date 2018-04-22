@@ -17,12 +17,37 @@ namespace YourForum.Web.Features.Tenants
         {
             var result = await _mediator.Send(query);
 
-            return View(result.Tenants);
+            return View(result);
         }
 
         public IActionResult Create()
         {
             return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Create.Command command)
+        {
+            await _mediator.Send(command);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Edit(Edit.Query query)
+        {
+            var model = await _mediator.Send(query);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Edit.Command command)
+        {
+            await _mediator.Send(command);
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

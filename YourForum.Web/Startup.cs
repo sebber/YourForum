@@ -8,6 +8,7 @@ using HtmlTags;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,7 +31,8 @@ namespace YourForum.Web
         public void ConfigureServices(IServiceCollection services)
         {
             var connectionString = Configuration.GetConnectionString("YourForumContext");
-            services.AddEntityFrameworkNpgsql().AddDbContext<YourForumContext>(options => options.UseNpgsql(connectionString));
+            services.AddEntityFrameworkNpgsql()
+                    .AddDbContext<YourForumContext>(options => options.UseNpgsql(connectionString));
 
             services.AddAutoMapper();
 
@@ -38,16 +40,17 @@ namespace YourForum.Web
 
             services.AddHtmlTags(new TagConventions());
 
-            services
-                .AddMvc(opt =>
-                {
-                    opt.Filters.Add(typeof(DbContextTransactionFilter));
-                    opt.Filters.Add(typeof(ValidatorActionFilter));
-                    opt.ModelBinderProviders.Insert(0, new EntityModelBinderProvider());
-                })
-                .AddFeatureFolders()
-                .AddAreaFeatureFolders()
-                .AddFluentValidation(cfg => { cfg.RegisterValidatorsFromAssemblyContaining<Startup>(); });
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            services.AddMvc(opt =>
+                    {
+                        opt.Filters.Add(typeof(DbContextTransactionFilter));
+                        opt.Filters.Add(typeof(ValidatorActionFilter));
+                        opt.ModelBinderProviders.Insert(0, new EntityModelBinderProvider());
+                    })
+                    .AddFeatureFolders()
+                    .AddAreaFeatureFolders()
+                    .AddFluentValidation(cfg => { cfg.RegisterValidatorsFromAssemblyContaining<Startup>(); });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,6 +59,8 @@ namespace YourForum.Web
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseBrowserLink();
+                Mapper.AssertConfigurationIsValid();
             }
             else
             {
