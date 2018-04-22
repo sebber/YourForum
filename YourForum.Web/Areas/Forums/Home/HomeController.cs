@@ -14,6 +14,8 @@ namespace YourForum.Web.Areas.Forums.Home
 
         public async Task<IActionResult> Index(Index.Query query)
         {
+            query.ForumId = Forum.Id;
+
             var result = await _mediator.Send(query);
 
             return View(result);

@@ -3,13 +3,14 @@ using System.Data;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using YourForum.Web.Models;
 
 namespace YourForum.Web.Data
 {
-    public class YourForumContext : DbContext
+    public class YourForumContext : IdentityDbContext<Account>
     {
         private IDbContextTransaction _currentTransaction;
 
@@ -18,6 +19,7 @@ namespace YourForum.Web.Data
         { }
 
         public DbSet<Tenant> Tenants { get; set; }
+        //public DbSet<Account> Accounts { get; set; }
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {

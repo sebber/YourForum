@@ -1,0 +1,12 @@
+﻿@model YourForum.Web.Areas.Forums.Accounts.Index.Result
+
+<div class="page-header">
+    Konton här, <a asp-action="create">Skapa!</a>
+</div>
+
+@foreach (var account in @Model.Accounts)
+{
+    <div>
+        @account.Email
+    </div>
+}

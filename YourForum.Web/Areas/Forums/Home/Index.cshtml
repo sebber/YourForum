@@ -1,6 +1,7 @@
 ﻿@model YourForum.Web.Areas.Forums.Home.Index.Result
-
-
+@{
+    var tenant = @Context.Items["tenant"] as Tenant;
+}
 <div class="page-header">
-    <h1>Välkommen till Forumet @* @Model.Forum.Name *@</h1>
+    <h1>Välkommen till Forumet @tenant.Name</h1>
 </div>

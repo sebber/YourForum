@@ -11,9 +11,10 @@ using YourForum.Web.Data;
 namespace YourForum.Web.Migrations
 {
     [DbContext(typeof(YourForumContext))]
-    partial class YourForumContextModelSnapshot : ModelSnapshot
+    [Migration("20180422222830_AddDateStampsToAccount")]
+    partial class AddDateStampsToAccount
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
