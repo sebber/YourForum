@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using YourForum.Web.Models;
+using YourForum.Core.Models;
 using AutoMapper;
 
 namespace YourForum.Web.Features.Home
@@ -11,6 +8,7 @@ namespace YourForum.Web.Features.Home
     {
         public MappingProfile()
         {
+            CreateMap<Tenant, Index.Forum>();
         }
     }
 }

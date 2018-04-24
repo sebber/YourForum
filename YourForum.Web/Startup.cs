@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using FluentValidation.AspNetCore;
 using HtmlTags;
@@ -13,10 +10,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using YourForum.Web.Data;
-using YourForum.Web.Infrastructure;
-using YourForum.Web.Infrastructure.Tags;
-using YourForum.Web.Models;
+using YourForum.Core.Data;
+using YourForum.Core.Infrastructure;
+using YourForum.Core.Infrastructure.Tags;
+using YourForum.Core.Models;
 
 namespace YourForum.Web
 {
@@ -72,6 +69,7 @@ namespace YourForum.Web
                         opt.Filters.Add(typeof(DbContextTransactionFilter));
                         opt.Filters.Add(typeof(ValidatorActionFilter));
                         opt.ModelBinderProviders.Insert(0, new EntityModelBinderProvider());
+                        opt.Filters.Add(typeof(ForumTenantFilter));
                     })
                     .AddFeatureFolders()
                     .AddAreaFeatureFolders()
@@ -92,19 +90,15 @@ namespace YourForum.Web
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseForumTenant();
+            //app.UseForumTenant();
 
             app.UseStaticFiles();
 
-            app.UseMvcWithDefaultRoute().UseMvc(routes =>
+            app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "forumAreaRoutes",
-                    template: "{area:exists=forum}/{forumId}/{controller=Home}/{action=Index}/{id?}");
-
-                routes.MapRoute(
-                    name: "areaRoute",
-                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                    name: "default",
+                    template: "{forumId:int}/{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

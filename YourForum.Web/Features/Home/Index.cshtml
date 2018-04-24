@@ -1,5 +1,7 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model YourForum.Web.Features.Home.Index.Result
+@{
+    var tenant = @Context.Items["tenant"] as Tenant;
 }
-
-Hello
+<div class="page-header">
+    <h1>Välkommen till Forumet @tenant.Name</h1>
+</div>

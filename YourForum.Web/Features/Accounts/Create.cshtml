@@ -1,0 +1,30 @@
+﻿@model YourForum.Web.Features.Accounts.Create.Command
+
+<div class="page-header">
+    <h1>Registrera ett nytt konto</h1>
+</div>
+
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="create" method="post">
+            @Html.ValidationDiv()
+
+            @Html.FormBlock(m => m.UserName)
+
+            @Html.FormBlock(m => m.Email)
+
+            @Html.FormBlock(m => m.Password)
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-success pull-right">
+                    Spara
+                </button>
+
+                <button asp-action="index" class="btn btn-link pull-left">
+                    Avbryt
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

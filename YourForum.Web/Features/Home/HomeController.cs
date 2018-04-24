@@ -1,28 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using YourForum.Web.Models;
 
 namespace YourForum.Web.Features.Home
 {
-    public class HomeController : Controller
+    
+    public class HomeController : ForumController
     {
         private readonly IMediator _mediator;
 
         public HomeController(IMediator mediator) => _mediator = mediator;
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(Index.Query query)
         {
-            return View();
-        }
+            query.ForumId = Forum.Id;
 
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var result = await _mediator.Send(query);
+
+            return View(result);
         }
     }
 }

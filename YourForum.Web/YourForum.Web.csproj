@@ -22,12 +22,13 @@
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Data\" />
-    <Folder Include="Areas\Forums\Home\" />
+    <Folder Include="Features\Home\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Remove="Features\Home\Contact.cshtml" />
     <Content Remove="Features\Shared\_ValidationScriptsPartial.cshtml" />
     <Content Remove="Features\Shared\Error.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\YourForum.Shared\YourForum.Core.csproj" />
   </ItemGroup>
 </Project>

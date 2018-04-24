@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using YourForum.Web.Infrastructure.Tags;
+using YourForum.Core.Infrastructure.Tags;
 using HtmlTags;
 using HtmlTags.Conventions;
 using Microsoft.AspNetCore.Mvc.Rendering;
