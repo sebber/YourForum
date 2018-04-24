@@ -8,7 +8,7 @@ namespace YourForum.Core.Infrastructure
     {
         public IModelBinder GetBinder(ModelBinderProviderContext context)
         {
-            return typeof(Entity).IsAssignableFrom(context.Metadata.ModelType) ? new EntityModelBinder() : null;
+            return typeof(IEntity).IsAssignableFrom(context.Metadata.ModelType) ? new EntityModelBinder() : null;
         }
     }
 }

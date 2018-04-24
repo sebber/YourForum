@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace YourForum.Core.Models
 {
-    public class Account : IdentityUser
+    public class Account : IdentityUser<int>, ITenantEntity
     {
         public int TenantId { get; set; }
         public Tenant Tenant { get; set; }

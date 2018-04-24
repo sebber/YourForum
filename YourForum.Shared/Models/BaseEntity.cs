@@ -2,7 +2,7 @@
 
 namespace YourForum.Core.Models
 {
-    abstract public class BaseEntity : Entity
+    abstract public class BaseEntity : IEntity
     {
         public int Id { get; set; }
         public DateTime? DateCreated { get; set; }

@@ -15,8 +15,6 @@ namespace YourForum.Web.Features.Accounts
 
         public async Task<IActionResult> Index(Index.Query query)
         {
-            query.ForumId = Forum.Id;
-
             var result = await _mediator.Send(query);
 
             return View(result);

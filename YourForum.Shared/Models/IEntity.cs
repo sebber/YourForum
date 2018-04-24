@@ -2,7 +2,7 @@
 
 namespace YourForum.Core.Models
 {
-    public interface Entity
+    public interface IEntity
     {
         int Id { get; set; }
 

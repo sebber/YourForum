@@ -31,7 +31,10 @@ namespace YourForum.Front
         {
             var connectionString = Configuration.GetConnectionString("YourForumContext");
             services.AddEntityFrameworkNpgsql()
-                    .AddDbContext<YourForumContext>(options => options.UseNpgsql(connectionString));
+                    .AddDbContext<YourForumContext>(options =>
+                    {
+                        options.UseNpgsql(connectionString, b => b.MigrationsAssembly("YourForum.Core"));
+                    });
 
             services.AddAutoMapper();
 
@@ -41,7 +44,7 @@ namespace YourForum.Front
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            services.AddIdentity<Account, IdentityRole>()
+            services.AddIdentity<Account, Role>()
                 .AddEntityFrameworkStores<YourForumContext>()
                 .AddDefaultTokenProviders();
 

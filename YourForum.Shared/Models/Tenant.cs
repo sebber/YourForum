@@ -2,7 +2,7 @@
 
 namespace YourForum.Core.Models
 {
-    public class Tenant : BaseEntity, Entity
+    public class Tenant : BaseEntity, IEntity
     {
         public string Name { get; set; }
     }

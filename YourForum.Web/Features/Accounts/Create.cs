@@ -12,28 +12,29 @@ namespace YourForum.Web.Features.Accounts
 {
     public class Create
     {
-        public class Command : IRequest<string>
+        public class Command : IRequest<int>
         {
-            [IgnoreMap]
-            public string Id { get; set; }
             public int TenantId { get; set; }
+            [IgnoreMap]
+            public int Id { get; set; }
             public string UserName { get; set; }
             public string Email { get; set; }
             [IgnoreMap]
             public string Password { get; set; }
         }
 
-        public class Handler : AsyncRequestHandler<Command, string>
+        public class Handler : AsyncRequestHandler<Command, int>
         {
             private readonly UserManager<Account> _db;
 
             public Handler(UserManager<Account> db) => _db = db;
 
-            protected override async Task<string> HandleCore(Command message)
+            protected override async Task<int> HandleCore(Command message)
             {
                 var account = Mapper.Map<Command, Account>(message);
 
                 account.Id = message.Id;
+                account.TenantId = message.TenantId;
 
                 var result = await _db.CreateAsync(account, message.Password);
 
@@ -42,7 +43,7 @@ namespace YourForum.Web.Features.Accounts
                     return account.Id;
                 }
 
-                return "failed";
+                return 0;
             }
         }
     }

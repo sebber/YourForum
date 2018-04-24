@@ -15,7 +15,6 @@ namespace YourForum.Web.Features.Accounts
     {
         public class Query : IRequest<Result>
         {
-            public int ForumId { get; set; }
         }
 
         public class Result
@@ -40,7 +39,6 @@ namespace YourForum.Web.Features.Accounts
             protected override async Task<Result> HandleCore(Query request)
             {
                 var accounts = await _db.Users
-                    .Where(u => u.TenantId == request.ForumId)
                     .OrderBy(u => u.DateCreated)
                     .ProjectTo<Model>()
                     .ToListAsync();
