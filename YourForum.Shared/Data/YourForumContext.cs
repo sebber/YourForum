@@ -15,7 +15,7 @@ using YourForum.Core.Models;
 
 namespace YourForum.Core.Data
 {
-    public class YourForumContext : IdentityDbContext<Account, Role, int>
+    public class YourForumContext : DbContext
     {
         private IDbContextTransaction _currentTransaction;
 
@@ -32,6 +32,7 @@ namespace YourForum.Core.Data
         }
 
         public DbSet<Tenant> Tenants { get; set; }
+        public DbSet<Account> Accounts{ get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -43,12 +44,14 @@ namespace YourForum.Core.Data
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
             AddTimestamps();
+            AddTenant();
             return base.SaveChanges(acceptAllChangesOnSuccess);
         }
 
         public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
         {
             AddTimestamps();
+            AddTenant();
             return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
 
@@ -64,6 +67,19 @@ namespace YourForum.Core.Data
                 }
 
                 ((IEntity)entity.Entity).DateModified = DateTime.UtcNow;
+            }
+        }
+
+        private void AddTenant()
+        {
+            var entities = ChangeTracker.Entries().Where(x => x.Entity is ITenantEntity && (x.State == EntityState.Added));
+
+            foreach (var entity in entities)
+            {
+                if (entity.State == EntityState.Added)
+                {
+                    ((ITenantEntity)entity.Entity).TenantId = _tenantId;
+                }
             }
         }
 

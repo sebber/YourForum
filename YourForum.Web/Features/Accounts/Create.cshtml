@@ -10,7 +10,7 @@
         <form asp-action="create" method="post">
             @Html.ValidationDiv()
 
-            @Html.FormBlock(m => m.UserName)
+            @Html.FormBlock(m => m.Username)
 
             @Html.FormBlock(m => m.Email)
 
@@ -28,3 +28,7 @@
         </form>
     </div>
 </div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

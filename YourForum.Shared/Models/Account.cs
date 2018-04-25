@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace YourForum.Core.Models
 {
-    public class Account : IdentityUser<int>, ITenantEntity
+    public class Account : BaseTenantEntity, ITenantEntity
     {
-        public int TenantId { get; set; }
-        public Tenant Tenant { get; set; }
-        
-        public DateTime? DateCreated { get; set; }
-        public DateTime? DateModified { get; set; }
+        public string Username { get; set; }
+
+        public string Email { get; set; }
+
+        public string Password { get; set; }
     }
 }

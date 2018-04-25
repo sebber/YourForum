@@ -38,7 +38,7 @@ namespace YourForum.Web.Features.Accounts
 
             protected override async Task<Result> HandleCore(Query request)
             {
-                var accounts = await _db.Users
+                var accounts = await _db.Accounts
                     .OrderBy(u => u.DateCreated)
                     .ProjectTo<Model>()
                     .ToListAsync();

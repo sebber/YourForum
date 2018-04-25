@@ -44,29 +44,6 @@ namespace YourForum.Front
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            services.AddIdentity<Account, Role>()
-                .AddEntityFrameworkStores<YourForumContext>()
-                .AddDefaultTokenProviders();
-
-            services.Configure<IdentityOptions>(options =>
-            {
-                // Password settings
-                options.Password.RequireDigit = false;
-                options.Password.RequiredLength = 4;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequireLowercase = false;
-                options.Password.RequiredUniqueChars = 1;
-
-                // Lockout settings
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
-                options.Lockout.MaxFailedAccessAttempts = 10;
-                options.Lockout.AllowedForNewUsers = true;
-
-                // User settings
-                options.User.RequireUniqueEmail = false;
-            });
-
             services.AddMvc(opt =>
             {
                 opt.Filters.Add(typeof(DbContextTransactionFilter));

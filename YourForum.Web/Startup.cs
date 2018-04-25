@@ -14,6 +14,7 @@ using YourForum.Core.Data;
 using YourForum.Core.Infrastructure;
 using YourForum.Core.Infrastructure.Tags;
 using YourForum.Core.Models;
+using YourForum.Core.Services;
 
 namespace YourForum.Web
 {
@@ -43,29 +44,7 @@ namespace YourForum.Web
             services.AddHtmlTags(new TagConventions());
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
-            services.AddIdentity<Account, Role>()
-                .AddEntityFrameworkStores<YourForumContext>()
-                .AddDefaultTokenProviders();
-
-            services.Configure<IdentityOptions>(options =>
-            {
-                // Password settings
-                options.Password.RequireDigit = false;
-                options.Password.RequiredLength = 4;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequireLowercase = false;
-                options.Password.RequiredUniqueChars = 1;
-
-                // Lockout settings
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
-                options.Lockout.MaxFailedAccessAttempts = 10;
-                options.Lockout.AllowedForNewUsers = true;
-
-                // User settings
-                options.User.RequireUniqueEmail = false;
-            });
+            services.AddSingleton<IPasswordService, DefaultPasswordService>();
 
             services.AddMvc(opt =>
                     {

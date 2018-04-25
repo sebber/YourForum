@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using YourForum.Core.Data;
+using YourForum.Core.Services;
 
 namespace YourForum.Web.Features.Home
 {

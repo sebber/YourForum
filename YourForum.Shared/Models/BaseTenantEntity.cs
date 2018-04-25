@@ -4,7 +4,7 @@ using System.Text;
 
 namespace YourForum.Core.Models
 {
-    class BaseTenantEntity : BaseEntity, ITenantEntity
+    abstract public class BaseTenantEntity : BaseEntity, ITenantEntity
     {
         public int TenantId { get; set; }
         public Tenant Tenant { get; set; }

@@ -29,8 +29,6 @@ namespace YourForum.Web.Features.Accounts
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Create.Command command)
         {
-            command.TenantId = Forum.Id;
-
             await _mediator.Send(command);
 
             return RedirectToAction(nameof(Index));

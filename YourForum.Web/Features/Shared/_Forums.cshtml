@@ -31,6 +31,12 @@
                 </button>
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">@tenant.Name</a>
             </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a asp-area="" asp-controller="home" asp-action="index">Home</a></li>
+                    <li><a asp-area="" asp-controller="accounts" asp-action="index">Accounts</a></li>
+                </ul>
+            </div>
         </div>
     </nav>
     <div class="container body-content">
@@ -39,6 +45,7 @@
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/lodash/dist/lodash.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
@@ -48,6 +55,10 @@
                 asp-fallback-test="window.jQuery"
                 crossorigin="anonymous"
                 integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.min.js"
+                asp-fallback-src="~/lib/lodash/dist/lodash.min.js"
+                asp-fallback-test="window._">
         </script>
         <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
                 asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
