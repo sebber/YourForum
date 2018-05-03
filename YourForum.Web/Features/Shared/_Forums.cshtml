@@ -1,5 +1,6 @@
-﻿@{ 
+﻿@{
     var tenant = @Context.Items["tenant"] as Tenant;
+
 }
 <!DOCTYPE html>
 <html>
@@ -37,6 +38,16 @@
                     <li><a asp-area="" asp-controller="accounts" asp-action="index">Accounts</a></li>
                 </ul>
             </div>
+            <ul class="nav navbar-nav navbar-right">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li><a asp-controller="authentication" asp-action="signout">Logga ut</a></li>
+                }
+                else
+                {
+                    <li><a asp-controller="authentication" asp-action="signin">Logga in</a></li>
+                }
+            </ul>
         </div>
     </nav>
     <div class="container body-content">

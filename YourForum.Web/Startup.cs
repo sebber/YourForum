@@ -15,6 +15,7 @@ using YourForum.Core.Infrastructure;
 using YourForum.Core.Infrastructure.Tags;
 using YourForum.Core.Models;
 using YourForum.Core.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace YourForum.Web
 {
@@ -42,6 +43,9 @@ namespace YourForum.Web
             services.AddMediatR();
 
             services.AddHtmlTags(new TagConventions());
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IPasswordService, DefaultPasswordService>();
@@ -72,6 +76,8 @@ namespace YourForum.Web
             }
 
             //app.UseForumTenant();
+
+            app.UseAuthentication();
 
             app.UseStaticFiles();
 
