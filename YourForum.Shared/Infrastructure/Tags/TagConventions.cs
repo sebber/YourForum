@@ -9,7 +9,6 @@ namespace YourForum.Core.Infrastructure.Tags
     {
         public TagConventions()
         {
-
             Editors.Always.AddClass("form-control");
 
             Editors.IfPropertyIs<DateTime?>().ModifyWith(m => m.CurrentTag
