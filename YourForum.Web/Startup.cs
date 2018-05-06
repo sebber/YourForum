@@ -84,6 +84,16 @@ namespace YourForum.Web
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
+                    name: "signin",
+                    template: "{forumId:int}/signin",
+                    defaults: new { controller = "Authentication", action = "SignIn" });
+
+                routes.MapRoute(
+                    name: "signout",
+                    template: "{forumId:int}/signout",
+                    defaults: new { controller = "Authentication", action = "SignOut" });
+
+                routes.MapRoute(
                     name: "default",
                     template: "{forumId:int}/{controller=Home}/{action=Index}/{id?}");
             });
