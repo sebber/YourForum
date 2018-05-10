@@ -1,0 +1,28 @@
+﻿@model YourForum.Web.Features.Threads.Index.Response
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Trådar
+
+        <a asp-action="create" class="pull-right">Ny tråd</a>
+    </div>
+    <table class="Threads table table-striped">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th style="width: 20%;">Datum skapad</th>
+                <th style="width: 100px;">Inlägg</th>
+            </tr>
+        </thead>
+        @foreach (var thread in @Model.Threads)
+        {
+            <tr class="Thread">
+                <td class="Thread__subject">
+                    <a asp-action="details" asp-route-id="@thread.Id">@thread.Subject</a>
+                </td>
+                <td>@thread.DateCreated</td>
+                <td>@thread.ReplyCount</td>
+            </tr>
+        }
+    </table>
+</div>

@@ -4,9 +4,23 @@
     Konton här, <a asp-action="create">Skapa!</a>
 </div>
 
-@foreach (var account in @Model.Accounts)
-{
-    <div>
-        @account.Email
-    </div>
-}
+<table>
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var account in @Model.Accounts)
+        {
+        <tr>
+            <td>@account.Email</td>
+            <td>
+                <a asp-action="details" asp-route-id="@account.Id">Visa</a>
+                <a asp-action="edit" asp-route-id="@account.Id">Redigera</a>
+            </td>
+        </tr>
+        }
+    </tbody>    
+</table>

@@ -12,6 +12,7 @@ namespace YourForum.Web.Features.Accounts
             CreateMap<Create.Command, Account>(MemberList.Source)
                 .ForSourceMember(c => c.Id, opt => opt.Ignore())
                 .ForSourceMember(c => c.Password, opt => opt.Ignore());
+            CreateMap<Account, Edit.Command>().ReverseMap();
         }
     }
 }

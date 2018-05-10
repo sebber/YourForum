@@ -11,9 +11,10 @@ using YourForum.Core.Data;
 namespace YourForum.Core.Migrations
 {
     [DbContext(typeof(YourForumContext))]
-    partial class YourForumContextModelSnapshot : ModelSnapshot
+    [Migration("20180507025444_AddAuthorPostRelation")]
+    partial class AddAuthorPostRelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,34 +45,6 @@ namespace YourForum.Core.Migrations
                     b.ToTable("Accounts");
                 });
 
-            modelBuilder.Entity("YourForum.Core.Models.Post", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("AuthorId");
-
-                    b.Property<string>("Body");
-
-                    b.Property<DateTime?>("DateCreated");
-
-                    b.Property<DateTime?>("DateModified");
-
-                    b.Property<int>("ParentId");
-
-                    b.Property<string>("Subject");
-
-                    b.Property<int>("TenantId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AuthorId");
-
-                    b.HasIndex("TenantId");
-
-                    b.ToTable("Posts");
-                });
-
             modelBuilder.Entity("YourForum.Core.Models.Tenant", b =>
                 {
                     b.Property<int>("Id")
@@ -90,19 +63,6 @@ namespace YourForum.Core.Migrations
 
             modelBuilder.Entity("YourForum.Core.Models.Account", b =>
                 {
-                    b.HasOne("YourForum.Core.Models.Tenant", "Tenant")
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("YourForum.Core.Models.Post", b =>
-                {
-                    b.HasOne("YourForum.Core.Models.Account", "Author")
-                        .WithMany()
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("YourForum.Core.Models.Tenant", "Tenant")
                         .WithMany()
                         .HasForeignKey("TenantId")

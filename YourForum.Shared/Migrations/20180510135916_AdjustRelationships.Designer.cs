@@ -11,9 +11,10 @@ using YourForum.Core.Data;
 namespace YourForum.Core.Migrations
 {
     [DbContext(typeof(YourForumContext))]
-    partial class YourForumContextModelSnapshot : ModelSnapshot
+    [Migration("20180510135916_AdjustRelationships")]
+    partial class AdjustRelationships
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,8 +66,6 @@ namespace YourForum.Core.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AuthorId");
-
                     b.HasIndex("TenantId");
 
                     b.ToTable("Posts");
@@ -98,11 +97,6 @@ namespace YourForum.Core.Migrations
 
             modelBuilder.Entity("YourForum.Core.Models.Post", b =>
                 {
-                    b.HasOne("YourForum.Core.Models.Account", "Author")
-                        .WithMany()
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("YourForum.Core.Models.Tenant", "Tenant")
                         .WithMany()
                         .HasForeignKey("TenantId")

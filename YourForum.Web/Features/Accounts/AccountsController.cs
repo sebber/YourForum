@@ -13,25 +13,34 @@ namespace YourForum.Web.Features.Accounts
 
         public AccountsController(IMediator mediator) => _mediator = mediator;
 
-        public async Task<IActionResult> Index(Index.Query query)
-        {
-            var result = await _mediator.Send(query);
+        public async Task<IActionResult> Index(Index.Query query) => 
+            View(await _mediator.Send(query));
 
-            return View(result);
+        public async Task<IActionResult> Details(Details.Query query) =>
+            View(await _mediator.Send(query));
+
+        public async Task<IActionResult> Edit(Edit.Query query) =>
+            View(await _mediator.Send(query));
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Edit.Command command)
+        {
+            await _mediator.Send(command);
+
+            return RedirectToAction(nameof(Details), new { command.Id });
         }
 
-        public IActionResult Create()
-        {
-            return View();
-        }
+        public IActionResult Create() =>
+            View();        
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Create.Command command)
         {
-            await _mediator.Send(command);
+            var response = await _mediator.Send(command);
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Details), new { Id = response });
         }
     }
 }

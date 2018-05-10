@@ -10,12 +10,17 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using YourForum.Web;
 using YourForum.Core.Data;
 using YourForum.Core.Infrastructure;
 using YourForum.Core.Infrastructure.Tags;
 using YourForum.Core.Models;
 using YourForum.Core.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc.Razor;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.Extensions.Options;
 
 namespace YourForum.Web
 {
@@ -49,6 +54,23 @@ namespace YourForum.Web
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IPasswordService, DefaultPasswordService>();
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
+            services.AddScoped<TenantProvider>();
+
+            services.Configure<RequestLocalizationOptions>(opts =>
+                {
+                    var supportedCultures = new[]
+                    {
+                        new CultureInfo("en"),
+                        new CultureInfo("sv"),
+                    };
+
+                    opts.DefaultRequestCulture = new RequestCulture("en");
+                    // Formatting numbers, dates, etc.
+                    opts.SupportedCultures = supportedCultures;
+                    // UI strings that we have localized.
+                    opts.SupportedUICultures = supportedCultures;
+                });
 
             services.AddMvc(opt =>
                     {
@@ -58,7 +80,12 @@ namespace YourForum.Web
                         opt.Filters.Add(typeof(ForumTenantFilter));
                     })
                     .AddFeatureFolders()
-                    .AddFluentValidation(cfg => { cfg.RegisterValidatorsFromAssemblyContaining<Startup>(); });
+                    .AddFluentValidation(cfg => { cfg.RegisterValidatorsFromAssemblyContaining<Startup>(); })
+                    .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+                    .AddDataAnnotationsLocalization(options => {
+                        options.DataAnnotationLocalizerProvider = (type, factory) =>
+                            factory.Create(typeof(Translation));
+                    });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -78,6 +105,9 @@ namespace YourForum.Web
             //app.UseForumTenant();
 
             app.UseAuthentication();
+
+            var options = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
+            app.UseRequestLocalization(options.Value);
 
             app.UseStaticFiles();
 

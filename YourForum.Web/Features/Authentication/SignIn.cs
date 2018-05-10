@@ -47,7 +47,9 @@ namespace YourForum.Web.Features.Authentication
                 {
                     var claims = new List<Claim>
                     {
+                        new Claim(ClaimTypes.Name, account.Username),
                         new Claim(ClaimTypes.Email, account.Email),
+                        new Claim("Id", account.Id.ToString()),
                         new Claim("LastModified", account.DateModified.ToString())
                     };
 

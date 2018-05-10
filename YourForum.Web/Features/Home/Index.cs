@@ -13,7 +13,6 @@ namespace YourForum.Web.Features.Home
     {
         public class Query : IRequest<Result>
         {
-            public int ForumId { get; set; }
         }
 
         public class Result
@@ -37,7 +36,6 @@ namespace YourForum.Web.Features.Home
             protected override async Task<Result> HandleCore(Query request)
             {
                 var tenant = await _db.Tenants
-                    .Where(t => t.Id == request.ForumId)
                     .ProjectTo<Forum>()
                     .SingleOrDefaultAsync();
 

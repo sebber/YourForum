@@ -1,0 +1,41 @@
+﻿@model YourForum.Web.Features.Threads.Details.Response
+@using YourForum.Web.Features.Threads
+@{
+    var authorId = int.Parse(User.Claims.FirstOrDefault(c => c.Type.Equals("Id"))?.Value ?? "0");
+}
+
+
+<div class="Thread panel panel-warning">
+    <div class="Thread__title panel-heading">@Model.Thread.Subject</div>
+    <div class="panel-body">
+        <div class="Thread__meta">
+            Written by @Model.Thread.Author.Username, @Model.Thread.DateCreated
+        </div>
+        <div class="Thread__body">
+            @Model.Thread.Body
+        </div>
+    </div>
+</div>
+
+<div class="Replies">
+    @foreach (var reply in @Model.Replies)
+    {
+        <div class="Reply panel panel-info">
+            <div class="Reply__subject panel-heading">@reply.Subject</div>
+            <div class="panel-body">
+                <div class="Reply__meta">
+                    Written by @reply.Author.Username, @reply.DateCreated
+                </div>
+                <div class="Reply__body">
+                    @reply.Body
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@await Html.PartialAsync("Reply", new Reply.Command
+{
+    AuthorId = authorId,
+    ParentId = Model.Thread.Id
+})

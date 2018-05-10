@@ -1,0 +1,28 @@
+﻿@model YourForum.Web.Features.Threads.Reply.Command
+
+<div class="ReplyForm panel panel-default">
+    <div class="panel-heading">
+        Skriv ett svar
+    </div>
+    <div class="panel-body">
+        <form asp-action="reply" method="post">
+            @Html.ValidationDiv()
+            <input-tag for="ParentId" />
+            <input-tag for="AuthorId" />
+
+            @Html.FormBlock(m => m.Subject)
+
+            @Html.FormBlock(m => m.Body)
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-success pull-right">
+                    Spara
+                </button>
+
+                <button asp-action="index" class="btn btn-link pull-left">
+                    Avbryt
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

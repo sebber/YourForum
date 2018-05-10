@@ -11,9 +11,10 @@ using YourForum.Core.Data;
 namespace YourForum.Core.Migrations
 {
     [DbContext(typeof(YourForumContext))]
-    partial class YourForumContextModelSnapshot : ModelSnapshot
+    [Migration("20180510144506_AdjustRelationships2")]
+    partial class AdjustRelationships2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

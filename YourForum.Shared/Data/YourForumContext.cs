@@ -19,24 +19,26 @@ namespace YourForum.Core.Data
     {
         private IDbContextTransaction _currentTransaction;
 
-        private int _tenantId;
+        private TenantProvider _tenantProvider;
 
-        public YourForumContext(DbContextOptions<YourForumContext> options, IHttpContextAccessor accessor)
+        public YourForumContext(DbContextOptions<YourForumContext> options, TenantProvider tenantProvider)
             : base(options)
         {
-            var segments = accessor?.HttpContext?.Request?.Path.Value?.Split('/') ?? new string[0];
-            if (segments.Length > 1 && int.TryParse(segments[1], out int forumId))
-                _tenantId = forumId;
-            else
-                _tenantId = 0;
+            _tenantProvider = tenantProvider;
         }
 
         public DbSet<Tenant> Tenants { get; set; }
-        public DbSet<Account> Accounts{ get; set; }
+        public DbSet<Account> Accounts { get; set; }
+        public DbSet<Post> Posts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Account>().HasQueryFilter(a => a.TenantId == _tenantId);
+            builder.Entity<Account>()
+                .HasQueryFilter(a => a.TenantId == _tenantProvider.GetTenantId());
+
+
+            builder.Entity<Post>()
+                .HasQueryFilter(a => a.TenantId == _tenantProvider.GetTenantId());
 
             base.OnModelCreating(builder);
         }
@@ -78,7 +80,7 @@ namespace YourForum.Core.Data
             {
                 if (entity.State == EntityState.Added)
                 {
-                    ((ITenantEntity)entity.Entity).TenantId = _tenantId;
+                    ((ITenantEntity)entity.Entity).TenantId = _tenantProvider.GetTenantId();
                 }
             }
         }

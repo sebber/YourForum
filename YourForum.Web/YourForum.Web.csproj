@@ -3,7 +3,11 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Localization.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="HtmlTags.AspNetCore" Version="7.0.0" />
+    <PackageReference Include="Localization.AspNetCore.TagHelpers" Version="0.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.7" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.0.2" />
@@ -26,6 +30,9 @@
   <ItemGroup>
     <Content Remove="Features\Shared\_ValidationScriptsPartial.cshtml" />
     <Content Remove="Features\Shared\Error.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Translation.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\YourForum.Shared\YourForum.Core.csproj" />
